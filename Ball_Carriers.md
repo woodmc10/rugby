@@ -29,6 +29,17 @@ I wanted to also try training a model on this dataset outside of the Roboflow pl
 #### Predicting Locally
 After downloading the weights, I predicted over the highlights (same as training data, just to test ability). On my CPU this took about 14 hrs. The final video had to be exported from the saved .mp4 to .mov in order to play in a jupyter notebook.
 
+### Labeling Second Game
+- Scotland v Wales
+
+#### Frame Extraction
+This time around, I used video-cli to extract frames from the video after using the same 4K Video Downloader to download the highlights from YouTube. I prefered this method because it was quick, and did not require any separate software, only python libraries. It did result in the extraction of every frame from the highlights, which is quite a lot of data. It was still easy to write a short script to pull every 13th frame into a training folder and all other frames into an extra_frames folder. 
+
+**NOTE:** Between the model weights for running locally and the additional frames extracted in this method there was too much to push up to GitHub. I added a DVC remote storage and pushed the models and data to DVC storage.
+
+#### Labeling
+I also tried a new labeling interface, LabelImg, which is a python library that opens a local UI for labling.
+
 
 Next Steps
 - does this need to be accurate to move to the next stage?
