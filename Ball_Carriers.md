@@ -38,7 +38,7 @@ This time around, I used video-cli to extract frames from the video after using 
 **NOTE:** Between the model weights for running locally and the additional frames extracted in this method there was too much to push up to GitHub. I added a DVC remote storage and pushed the models and data to DVC storage.
 
 #### Labeling
-I also tried a new labeling interface, LabelImg, which is a python library that opens a local UI for labling.
+I also tried a new labeling interface, LabelImg, which is a python library that opens a local UI for labling. This UI was not as easy to use as Roboflow. The minor differences of needing to select the Create RectBox, label, and save for each image made the process longer than in Roboflow, where it does not require any of these selections unless you need to change the label of the bouding box.
 
 
 Next Steps
