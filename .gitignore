@@ -1,5 +1,6 @@
 .DS_Store
-.ipynb_checkpoints*
-models/
-/runs
-/data
+*.ipynb_checkpoints*
+*models/
+*/runs
+*/data
+/rugby_venv
