@@ -1,0 +1,153 @@
+import json
+import cv2
+import tensorflow as tf
+import numpy as np
+from pathlib import Path
+import pandas as pd
+
+
+def load_annotations(json_path):
+    """Load annotations from exported JSON file."""
+    with open(json_path, 'r') as f:
+        annotations = json.load(f)
+    return annotations
+
+
+def extract_video_clips(video_path, annotations, output_dir, clip_length=64):
+    """
+    Extract video clips based on annotations and save them.
+
+    Args:
+        video_path: Path to source video
+        annotations: Loaded annotations dictionary
+        output_dir: Directory to save clips
+        clip_length: Number of frames per clip
+    """
+    # Create output directory
+    output_dir = Path(output_dir)
+    output_dir.mkdir(exist_ok=True, parents=True)
+
+    # Open video
+    cap = cv2.VideoCapture(str(video_path))
+    fps = cap.get(cv2.CAP_PROP_FPS)
+
+    # Process each annotation
+    clips_info = []
+    for tag in annotations['tags']:
+        action = tag['name']
+        if not action:
+            continue
+
+        start_frame = tag['frameRange'][0]
+        end_frame = tag['frameRange'][1]
+
+        # Set video to start frame
+        cap.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
+
+        # Calculate number of frames in sequence
+        n_frames = end_frame - start_frame
+
+        # Read frames
+        frames = []
+        for _ in range(n_frames):
+            ret, frame = cap.read()
+            if not ret:
+                break
+            frames.append(frame)
+
+        # Split into clips of specified length
+        for i in range(0, len(frames), clip_length):
+            clip = frames[i:i + clip_length]
+
+            # Only save if clip is complete
+            if len(clip) == clip_length:
+                clip_name = f"{action}_{start_frame + i}.mp4"
+                clip_path = output_dir / clip_name
+
+                # Save clip
+                out = cv2.VideoWriter(
+                    str(clip_path),
+                    cv2.VideoWriter_fourcc(*'mp4v'),
+                    fps,
+                    (frames[0].shape[1], frames[0].shape[0])
+                )
+
+                for frame in clip:
+                    out.write(frame)
+                out.release()
+
+                clips_info.append({
+                    'clip_path': str(clip_path),
+                    'action': action,
+                    'start_frame': start_frame + i,
+                    'end_frame': start_frame + i + clip_length
+                })
+
+    cap.release()
+    return pd.DataFrame(clips_info)
+
+
+def create_tf_dataset(clips_df, frame_size=(224, 224)):
+    """
+    Create TensorFlow dataset from clips.
+
+    Args:
+        clips_df: DataFrame with clip information
+        frame_size: Target frame size (height, width)
+    """
+    def load_video(path, label):
+        # Read video file
+        cap = cv2.VideoCapture(str(path))
+        frames = []
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                break
+            # Resize frame
+            frame = cv2.resize(frame, frame_size)
+            # Convert BGR to RGB
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            frames.append(frame)
+        cap.release()
+        return np.array(frames), label
+
+    # Create label mapping
+    labels = sorted(clips_df['action'].unique())
+    label_to_index = {label: i for i, label in enumerate(labels)}
+
+    # Create dataset
+    paths = clips_df['clip_path'].values
+    labels = [label_to_index[label] for label in clips_df['action']]
+
+    dataset = tf.data.Dataset.from_tensor_slices((paths, labels))
+    dataset = dataset.map(
+        lambda x, y: tf.py_function(
+            load_video,
+            [x, y],
+            [tf.float32, tf.int32]
+        ),
+        num_parallel_calls=tf.data.AUTOTUNE
+    )
+
+    return dataset, labels
+
+
+# Example usage
+def process_video_data(video_path, annotations_path, output_dir):
+    """Main processing function."""
+    # Load annotations
+    annotations = load_annotations(annotations_path)
+
+    # Extract clips
+    clips_df = extract_video_clips(video_path, annotations, output_dir)
+
+    # Create TF dataset
+    dataset, label_mapping = create_tf_dataset(clips_df)
+
+    return dataset, label_mapping, clips_df
+
+
+if __name__ == "__main__": 
+    process_video_data('data/rugby_7s/dataset_2025_01_23/video/usd_loyola.mp4',
+                       'data/rugby_7s/dataset_2025_01_23/ann/usd_loyola.json',
+                       'data/rugby_7s/dataset_2025_01_23/dataset/usd_loyola/')
