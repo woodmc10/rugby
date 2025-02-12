@@ -14,6 +14,8 @@ I'm starting off the project with some simple tutorials and finding a solution f
         * This labeling software seems to be more targetted at image labeling with solutions for boxes, maps, etc. I could not find an easy way to label a section of a video with a particualar action. But it did allow me to upload the video with the highest resolution because it did not have a 100Mb limit. The video playback on the annotation tab was slow with the image buffereing every 30ish frames (about every second).
     - Supervisely
         * Of the three options that I tried I like this interface the best for labeling segments of frames for action recognition. But it does have a 100Mb limit for uploading videos that may become a limit with longer videos. 
+* Downloading frames from YouTube
+    - https://www.4kdownload.com/howto/how-to-extract-frames-from-a-youtube-video/2
 
 
 ### 2-3-25
@@ -52,4 +54,8 @@ Current Status: I've walked through the Google Colab tutorials and used Supervis
             1. Figure out how to create a dataset from the Supervisely labeled rugby videos
                 - clip videos
                 - save labels in correct location/format
-                - other tasks?
+
+### 2-12-2025
+I've used Claude to help me create a python file that can use the annotations file from Supervisely to chunk out labeled images and create a Tensorflow dataset. 
+* Goal: use the dataset to finetune movinet - no expectation of performance, just confirming the steps can be done.
+    - Subtask: Complete documentation in a clear way that Future-Me could run if I didn't work on this project for the next year.
