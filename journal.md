@@ -41,6 +41,7 @@ Current Status: I've walked through the Google Colab tutorials and used Supervis
                     - Model architecture is limited. The intro discusses increases of frame input to 1500. The video I have of a single game is closer to 35,000 frames. 
                 * TadTR: https://arxiv.org/pdf/2106.10271
                     - Temporal action detection using transformers
+                * Helpful GitHub: https://github.com/sming256/openTAD?tab=readme-ov-file
         * Action Detection
     - I'm going to focus on Temporal Action Localization/Detection methods
 
@@ -59,3 +60,11 @@ Current Status: I've walked through the Google Colab tutorials and used Supervis
 I've used Claude to help me create a python file that can use the annotations file from Supervisely to chunk out labeled images and create a Tensorflow dataset. 
 * Goal: use the dataset to finetune movinet - no expectation of performance, just confirming the steps can be done.
     - Subtask: Complete documentation in a clear way that Future-Me could run if I didn't work on this project for the next year.
+
+### 2-17-2025
+Colab tutorial is crashing when trying to use TPU for inference. I haven't been able to identify if this is a versioning problem. For now I'm going to try to move forward with fine tuning on the tiny dataset on a CPU. I'll need to investigate other ways of training/inference if the dataset works.
+- I found a work around for the error. Using the CPU allows for inference. Now I need to break out the parts that need GPU for training. Likely will be best to create a separate training notebook.
+
+### 2-19-2025
+Links I may need in the docs
+* https://www.4kdownload.com/-54 (software for downloading from YouTube)

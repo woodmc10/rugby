@@ -1,0 +1,14 @@
+I'm starting this out as a stream of conciousness doc for the steps I took to get my first training data ready, and to use it to fine tune a movinet model on colab.
+
+## Steps
+1. Find examples of women's 7s games on YouTube that have similar video quality as the Bowdin games. I expect most college games will be of similar video quality. I want to avoid any of the international 7s circuit games that will likely have much better quality. The games I found are stored in a YouTube playlist [here](https://www.youtube.com/playlist?list=PLu4l0BoCoY7t0Xv_4viSXXSU92Stu5U69).
+1. Once reasonable quality videos are located, they can be downloaded locally to be uploaded for labeling. 4K Video Downloader+ can be used to download the videos from YouTube. Copy the link from YouTube, click on the Paste Link button and follow the steps. Downloading at 360p resulted in a file small enough to upload to Supervisely and still maintined the necessary quality for labeling and training.
+1. Next, upload the video to [Supervisely](https://app.supervisely.com/projects) and start labeling. Supervisely has classes and tags - I'm not exactly sure which one is the best to use for any given situation. I created two types of tags - dark_tackle, and white_tackle. The keyboard hotkeys are very helpful.
+1. After labeling the video, the annotation json can be downloaded. From the labeling GUI, look in the bottom right corner for the list of videos, the download button next to the video thumbnail provides the option to download the video or the annoations.
+    - The video and annotations should be stored under data/rugby_7s.
+    - I'm not confident of the necessary structure/locations to build a cohesive training/testing dataset from multiple labeled videos. I will need to work through this.
+1. Use src/dataset_claud.py to generate a tensorflow dataset. This code does execute completely, but I haven't used the resulting dataset to train a model. Instead, I took parts of this file and updated the movinet_tutorial.ipynb notebook to generate the clips needed for training from Colab. To run the src/dataset_claud.py file, update the folder locations in the if __name__ == "__main__" section and run the code from the terminal.
+1. Creating the dataset for fine tuning Movinet from Colab requires the data folder to be zipped and saved to Google Drive so that it can be mounted to the Colab VM. 
+    - I plan to split the current movinet_tutorial.ipynb notebook into two notebooks.
+    - The second notebook will be the one used for fine tuning and will include more instructions for running.
+1. I don't yet know how to save the fine tuned model or use it for inference.

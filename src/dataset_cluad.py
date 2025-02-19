@@ -92,26 +92,6 @@ def extract_video_clips(video_path, annotations, output_dir, clip_length=64):
     return pd.DataFrame(clips_info)
 
 
-# def save_videos_in_folders(clips_df, source_folder, target_folder):
-#     """
-#     Organizes videos into train/val folders by action label.
-    
-#     Args:
-#         clips_df: DataFrame with 'clip_path' and 'action' columns.
-#         source_folder: Folder where original videos are stored.
-#         target_folder: Destination folder for organized dataset.
-#     """
-#     for _, row in clips_df.iterrows():
-#         action = row['action']
-#         video_filename = os.path.basename(row['clip_path'])
-        
-#         # Define destination path
-#         action_folder = os.path.join(target_folder, action)
-#         os.makedirs(action_folder, exist_ok=True)
-        
-#         # Copy video to target folder
-#         shutil.copy(os.path.join(source_folder, video_filename), action_folder)
-
 
 def create_tf_dataset(clips_df, frame_size=(224, 224)):
     """
@@ -235,5 +215,3 @@ if __name__ == "__main__":
         print(f"Labels shape: {labels.shape}")
         print(labels)
 
-    # # Adjusting storage locations for TF dataset creation in Colab
-    # save_videos_in_folders(clips_df, "videos/", "dataset/train/")
