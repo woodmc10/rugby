@@ -60,6 +60,7 @@ Current Status: I've walked through the Google Colab tutorials and used Supervis
 I've used Claude to help me create a python file that can use the annotations file from Supervisely to chunk out labeled images and create a Tensorflow dataset. 
 * Goal: use the dataset to finetune movinet - no expectation of performance, just confirming the steps can be done.
     - Subtask: Complete documentation in a clear way that Future-Me could run if I didn't work on this project for the next year.
+* I tried to set up DVC, but it's having errors with the Google Drive authentication and I don't want to set up AWS or another storage system. For now, the DVC infrastructure is present but unused.
 
 ### 2-17-2025
 Colab tutorial is crashing when trying to use TPU for inference. I haven't been able to identify if this is a versioning problem. For now I'm going to try to move forward with fine tuning on the tiny dataset on a CPU. I'll need to investigate other ways of training/inference if the dataset works.
@@ -68,3 +69,30 @@ Colab tutorial is crashing when trying to use TPU for inference. I haven't been 
 ### 2-19-2025
 - I created some very basic documentation to remind myself of the steps I'm following. This will be helpful if I need to step away from the project for a few weeks, but much clearer documentation will be needed to execute the workflow if I step away for a long time.
 - I split the movinet tutorial notebook into two separate notebooks. One for the building and running the movinet model from tensorflow hub, and one for fine tuning. The movinet predictions encounter an error when running on the TPU, but the TPU is necessary for fine tuning. Instead of switching runtimes halfway through the notebook, I separated the notebook at the point where the runtime needs to be switched.
+
+#### Notes on Current State
+1. Model Options - I'm sticking with the MoViNet models for now because of the availability of the Colab tutorials. These models will classify a video clip, but will not idenfity a section of interest from a longer video. 
+    - Detecting clips for classification will be a task for later.
+    - I'm interested in exploring the [OpenTAD GitHub](https://github.com/sming256/openTAD?tab=readme-ov-file) more.
+1. Data Labeling - Supervisely will be used for data labeling from the internet. The reasoning behind that decision can be found above. 
+    - I still need to establish the best way to extract training clips from Veo so that I don't need to repeat the labeling tasks after uploading the game film to Supervisely.
+1. Tutorial Updates - The MoViNet tutorials themselves required some updates due to outdated libraries and CPU/GPU conflicts. I split the beginning of the tutorial (building and running) off from the fine tuning section of the tutorial. I had to install an older version of matplotlib to handle the visualization of the GIFs and plots, and had to use the legacy Keras integration with Tensorflow. The build and run notebook should be run using the CPU hardware, and the fine tuning notebook should be run using the GPU hardware. I added code to mount GDrive and clip training videos from full game film that has already been labeled using Supervisely. 
+    - The test set is currently the same as the training set. This is terrible practice for truly evaluating model performance, but I'm using it just to verify the code can be executed. This needs to be corrected ASAP.
+
+
+#### Next Steps
+1. Schedule more conversations with Laura.
+    - Get familiar with the terminology
+    - Understand how coaches review film and what they want to see clipped
+1. Develop a tagging system
+    - Classes and sub classes
+    - Assigning events to teams
+    - Assigning events to players
+1. Continue labeling and training
+    - Get a test set that isn't a duplicate of the training set!!!
+    - Label more games
+        * Confirm with Laura I can use their games for model training
+        * Get clips from Veo/Hudl for training
+        * Label more games from the internet
+1. Save model for inference
+1. Work on full game solution
