@@ -8,7 +8,5 @@ I'm starting this out as a stream of conciousness doc for the steps I took to ge
     - The video and annotations should be stored under data/rugby_7s.
     - I'm not confident of the necessary structure/locations to build a cohesive training/testing dataset from multiple labeled videos. I will need to work through this.
 1. Use src/dataset_claud.py to generate a tensorflow dataset. This code does execute completely, but I haven't used the resulting dataset to train a model. Instead, I took parts of this file and updated the movinet_tutorial.ipynb notebook to generate the clips needed for training from Colab. To run the src/dataset_claud.py file, update the folder locations in the if __name__ == "__main__" section and run the code from the terminal.
-1. Creating the dataset for fine tuning Movinet from Colab requires the data folder to be zipped and saved to Google Drive so that it can be mounted to the Colab VM. 
-    - I plan to split the current movinet_tutorial.ipynb notebook into two notebooks.
-    - The second notebook will be the one used for fine tuning and will include more instructions for running.
+1. Creating the dataset for fine tuning Movinet from Colab requires the data folder to be zipped and saved to Google Drive so that it can be mounted to the Colab VM. The mounting, dataset creation, and fine tuning can be completed from the movient_fine_tuning.ipynb notebook.
 1. I don't yet know how to save the fine tuned model or use it for inference.

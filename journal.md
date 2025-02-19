@@ -66,5 +66,5 @@ Colab tutorial is crashing when trying to use TPU for inference. I haven't been 
 - I found a work around for the error. Using the CPU allows for inference. Now I need to break out the parts that need GPU for training. Likely will be best to create a separate training notebook.
 
 ### 2-19-2025
-Links I may need in the docs
-* https://www.4kdownload.com/-54 (software for downloading from YouTube)
+- I created some very basic documentation to remind myself of the steps I'm following. This will be helpful if I need to step away from the project for a few weeks, but much clearer documentation will be needed to execute the workflow if I step away for a long time.
+- I split the movinet tutorial notebook into two separate notebooks. One for the building and running the movinet model from tensorflow hub, and one for fine tuning. The movinet predictions encounter an error when running on the TPU, but the TPU is necessary for fine tuning. Instead of switching runtimes halfway through the notebook, I separated the notebook at the point where the runtime needs to be switched.
