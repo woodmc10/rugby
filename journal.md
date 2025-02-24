@@ -78,6 +78,7 @@ Colab tutorial is crashing when trying to use TPU for inference. I haven't been 
     - I still need to establish the best way to extract training clips from Veo so that I don't need to repeat the labeling tasks after uploading the game film to Supervisely.
 1. Tutorial Updates - The MoViNet tutorials themselves required some updates due to outdated libraries and CPU/GPU conflicts. I split the beginning of the tutorial (building and running) off from the fine tuning section of the tutorial. I had to install an older version of matplotlib to handle the visualization of the GIFs and plots, and had to use the legacy Keras integration with Tensorflow. The build and run notebook should be run using the CPU hardware, and the fine tuning notebook should be run using the GPU hardware. I added code to mount GDrive and clip training videos from full game film that has already been labeled using Supervisely. 
     - The test set is currently the same as the training set. This is terrible practice for truly evaluating model performance, but I'm using it just to verify the code can be executed. This needs to be corrected ASAP.
+    - The MoViNet notebooks tend to break, I should run them regularly to ensure I've captured and corrected all the errors.
 
 
 #### Next Steps
@@ -91,7 +92,7 @@ Colab tutorial is crashing when trying to use TPU for inference. I haven't been 
 1. Continue labeling and training
     - Get a test set that isn't a duplicate of the training set!!!
     - Label more games
-        * Confirm with Laura I can use their games for model training
+        * Confirm with Laura that I can use their games for model training
         * Get clips from Veo/Hudl for training
         * Label more games from the internet
 1. Save model for inference
