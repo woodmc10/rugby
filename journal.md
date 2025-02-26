@@ -97,3 +97,12 @@ Colab tutorial is crashing when trying to use TPU for inference. I haven't been 
         * Label more games from the internet
 1. Save model for inference
 1. Work on full game solution
+
+### 2-24-2025
+Today I tried to download a YouTube video of multiple 7s games. I trimmed the original video down so that each game was a single file using Quick Time Player. When I tried to upload these to Supervisely I got an error about B-frames. A chat with Claude indicated that the error may be due to the way Quick Time Player trims and encodes the video.
+
+Possible Solutions:
+1. Supervisely: run an application called Transcode Videos. This is taking hours for 3 videos and has not finished yet.
+1. Claude command line: reencode the image with ffmpeg
+    - `ffmpeg -i input.mp4 -c:v libx264 -preset medium -crf 28 -bf 0 output.mp4`
+    - This worked, but reencoding with the above settings increased the file size slightly. It will be important to pay attention to file size given the 100MB limit on Supervisely. 
