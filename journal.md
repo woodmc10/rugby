@@ -106,3 +106,34 @@ Possible Solutions:
 1. Claude command line: reencode the image with ffmpeg
     - `ffmpeg -i input.mp4 -c:v libx264 -preset medium -crf 28 -bf 0 output.mp4`
     - This worked, but reencoding with the above settings increased the file size slightly. It will be important to pay attention to file size given the 100MB limit on Supervisely. 
+
+### 3-6-2025
+I've labeled 8 full games with light and dark tackles. 
+
+Next Steps:
+* Create a train/val split of the new larger dataset
+* Run the model with a small number of epochs (3) to get baseline stats
+* Evaluate possible hyperparameter changes and number of epochs for improved accuracy
+* Evaluate the code for video clipping
+    - I think it needs to be updated to clip variable lengths
+* Tag some "general action" labels to see if the model can pick tackles out from continuous play
+
+### 3-7-2025
+Train/val split created by setting the USD v Loyola game as the validation set. This game is from a different stream than the other games and should provide a challenge that is comparable to "production."
+
+Video clip length: I attempted to edit the code to handle video clips of various lengths. I discovered that padding would be required because the dataset batches require that all clips have the same shape (same number of frames). I thought about the situtation some more and realized that using this model for a full game would require feeding consistent length clips through the model and having them tagged as action/non-action and then classifying the action clips. In this situation, all clips would be of a consistent length. With this knowledge I decided to update the code to take the last X frames from the tagged regions instead of clipping the region into multiple sets of X frames. Most of the tackles I tagged started when contact was initiated and ended when the ball carrier went to ground. The key part of the tackle is the ball carrier going to ground, so taking the last X frames from every tag should provide a set of clips with a successful tackle in each clip. 
+- The runtime was crasshing when using clip length of 80 frames, but succeeded with a clip length of 40 frames
+
+Basline stats: ~20% accuracy (all predictions for one class)
+
+Next Steps (week of 3/10)
+* Write code to save model weights so training doesn't have to happen every time the notebook runs
+* Inspect predictions (labels and viewing clips)
+* Inspect training 
+    - How balanced are the labels?
+    - Is 40 frames enough? Are there clips with no tackle?
+* Evaluate possible hyperparameter changes and number of epochs for improved accuracy
+* Tag some "general action" labels to see if the model can pick tackles out from continuous play
+
+### 3-10-2025
+I had some trouble getting the model to save. I started with some code from Claude, but it didn't work. I wound up needing to save the model weights, recreate the model architecture in a new notebook and then load the saved weights. The model architecture still needs to be loaded with a frozen backbone to keep the model the same (and to avoid shape mismatch errors). 
