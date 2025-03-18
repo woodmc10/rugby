@@ -137,3 +137,6 @@ Next Steps (week of 3/10)
 
 ### 3-10-2025
 I had some trouble getting the model to save. I started with some code from Claude, but it didn't work. I wound up needing to save the model weights, recreate the model architecture in a new notebook and then load the saved weights. The model architecture still needs to be loaded with a frozen backbone to keep the model the same (and to avoid shape mismatch errors). 
+
+### 3-18-2025
+The model is struggling to learn with the small amount of data provided. I will continue to work on labeling more data, but the fastest way to get more data for training will be to switch from "white tackle" vs "dark tackle" to "tackle" vs "no tackle." I double the amount of training data I have without having to get permission to use more videos by just adding some game segments without tackles. 
