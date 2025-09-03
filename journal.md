@@ -140,3 +140,36 @@ I had some trouble getting the model to save. I started with some code from Clau
 
 ### 3-18-2025
 The model is struggling to learn with the small amount of data provided. I will continue to work on labeling more data, but the fastest way to get more data for training will be to switch from "white tackle" vs "dark tackle" to "tackle" vs "no tackle." I double the amount of training data I have without having to get permission to use more videos by just adding some game segments without tackles. 
+
+### 4-11-25
+I've finished labeling all the videos and downloaded the json files. Today I need to save the files in the correct place, zip them and store the zip in Google Drive, and update the code to treat white_tackle and dark_tackle as a single "tackle" category. After that, I should be able to train a new tackle vs no-tackle model and see if it performs better than the white vs dark tackle model.
+
+I upated the code to handle the new scenario, but the model did not improve. I need to dig into what's happening.
+
+### 5-5-2025
+I got permission to use the Bowdoin Women's Rugby matches that I've been coding for training the model. I'll label all of their 2025 matches and add them to the training. I expect I'll need to do more investigating to determine why the model is not working, but it is possible the increase in data will improve the model and the extra data will be necessary for the final model anyway.
+
+Other Ideas (before I start on the labeling):
+- The model may need lots more data, or it may be better suited to training with lots of different labels. To check this, I'd like to take the original notebook examples and reduce the number of classes down to two.
+
+### 7-1-25
+I've taken a step back from this due to the complexity of the models. I'd like to jump back in but it will be at least two weeks before I can get started due to the move to Iowa. Here is my plan for recommitting one day a week to this project.
+
+7/15: 
+    1. Troubleshoot MoviNet original notebook - reduce to two classes
+    2. Decide on a next approach - how many classes should I label?
+        Options:
+        * stick with only tackle
+        * pick more classes to try to label every moment of a game
+7/22: 
+    1. Label one Bowdoin video
+    2. Label three HSBC 7s games
+    3. Design a system to chunk the videos into segments for labeling
+7/29:
+    1. Label one HSBC 7s tournament
+    2. Train a model with HSBC labels and compare it to the model trained with college game footage
+    3. Reach out to Laura about fall season film plans
+8/5:
+    1. Explore models other than MoviNet2
+    2. Label one Bowdoin video
+    3. Plan August work
