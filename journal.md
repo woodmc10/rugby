@@ -173,3 +173,9 @@ I've taken a step back from this due to the complexity of the models. I'd like t
     1. Explore models other than MoviNet2
     2. Label one Bowdoin video
     3. Plan August work
+
+
+### 9-4-25
+I created a Claude Project to help me work through the rugby tackles CV model because I haven't touched it in months. Most of the reason that I haven't worked with it is because I didn't know what to take on next. Having a Claude project will help me get some direction. I'm aware this may not be completely right, but LLMs are great for getting past the writer's block that I'm experiencing now. I'll use it for that, correct errors as I find them, and hope that it leads to more progress.
+
+I started out to continue the investigation into why MoViNet was not making good predictions on my tackling dataset, but I quickly ran into issues with the CoLab notebooks. I decided to pivot and start the project fresh from AWS. 
