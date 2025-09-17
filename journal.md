@@ -192,3 +192,7 @@ Notes from AWS setup
 Docker Code was all written by Claude
 The orginal build files didn't work and the conversation ran out of memory during troubleshooting. Claude tried a few solutions to the installation conflicts (blinker 1.4) but nothing was working. I found a different solution through a Google Search AI answer (`RUN pip install --ignore-installed -r requirements.txt`) and now have a successfully built Docker image.
 
+Trying to test Docker set up with Claude command `docker-compose run rugby-dev python -c "import tensorflow as tf; print(tf.__version__)"` returned this warning:
+**WARN[0000] /Users/marthawood/Code/rugby/aws/rugby-tackles-project/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion**
+- This created a running container that I can do some minimal interaction with through the Docker Desktop, but I need a refresher on interacting with Docker. 
+- The dockerdocs suggest using `docker compose watch` for interactive development, but that is a website development example. I need to figure out how to do my daily development with Docker.
