@@ -1,0 +1,28 @@
+# Core ML libraries
+tensorflow==2.15.0
+tensorflow-hub==0.16.1
+opencv-python-headless==4.8.1.78
+numpy>=1.21.0,<2.0.0
+pandas>=1.5.0
+
+# Data processing
+Pillow>=9.0.0
+scikit-learn>=1.2.0
+
+# Experiment tracking
+mlflow>=2.0.0
+PyYAML>=6.0.0
+click>=8.0.0
+tqdm>=4.60.0
+
+# Visualization
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Development
+jupyter>=1.0.0
+jupyterlab>=3.0.0
+ipykernel>=6.0.0
+
+# AWS (optional)
+boto3>=1.26.0

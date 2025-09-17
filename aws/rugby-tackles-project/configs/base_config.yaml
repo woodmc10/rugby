@@ -1,0 +1,49 @@
+# Base configuration for rugby tackle detection
+
+# Data preprocessing
+preprocess:
+  clip_length: 40
+  frame_size: [224, 224]
+  test_split: 0.2
+  val_split: 0.2
+  normalize_pixels: true
+  data_augmentation: true
+
+# Model configuration  
+model:
+  name: "movinet_a0"
+  num_classes: 2
+  freeze_backbone: true
+  dropout_rate: 0.3
+
+# Training configuration
+training:
+  batch_size: 8
+  epochs: 50
+  learning_rate: 0.001
+  early_stopping_patience: 5
+  reduce_lr_patience: 3
+  class_weights: "balanced"  # or null for no weighting
+
+# Evaluation
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1"]
+  confusion_matrix: true
+  save_predictions: true
+
+# Paths (relative to project root)
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed" 
+  models: "data/models"
+  experiments: "experiments"
+  
+# MLflow
+mlflow:
+  experiment_name: "rugby-tackle-detection"
+  run_name: null  # auto-generated if null
+  
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

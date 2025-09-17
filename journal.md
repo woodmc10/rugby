@@ -179,3 +179,16 @@ I've taken a step back from this due to the complexity of the models. I'd like t
 I created a Claude Project to help me work through the rugby tackles CV model because I haven't touched it in months. Most of the reason that I haven't worked with it is because I didn't know what to take on next. Having a Claude project will help me get some direction. I'm aware this may not be completely right, but LLMs are great for getting past the writer's block that I'm experiencing now. I'll use it for that, correct errors as I find them, and hope that it leads to more progress.
 
 I started out to continue the investigation into why MoViNet was not making good predictions on my tackling dataset, but I quickly ran into issues with the CoLab notebooks. I decided to pivot and start the project fresh from AWS. 
+
+### 9-14-25
+Notes from AWS setup
+- created a new IAM user (mw_rugby_tackles)
+    * set up access
+- created s3 buckets for data, models, and logs
+    * `aws s3 ls`
+- aws has suspended my ability to create EC instances, waiting for assistance
+
+### 9-17-25
+Docker Code was all written by Claude
+The orginal build files didn't work and the conversation ran out of memory during troubleshooting. Claude tried a few solutions to the installation conflicts (blinker 1.4) but nothing was working. I found a different solution through a Google Search AI answer (`RUN pip install --ignore-installed -r requirements.txt`) and now have a successfully built Docker image.
+
