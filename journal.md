@@ -196,3 +196,8 @@ Trying to test Docker set up with Claude command `docker-compose run rugby-dev p
 **WARN[0000] /Users/marthawood/Code/rugby/aws/rugby-tackles-project/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion**
 - This created a running container that I can do some minimal interaction with through the Docker Desktop, but I need a refresher on interacting with Docker. 
 - The dockerdocs suggest using `docker compose watch` for interactive development, but that is a website development example. I need to figure out how to do my daily development with Docker.
+
+### 9/18/25
+Tensorflow can have a mismatch between the build architecture and the CPU architecture. This is likely the issue with my commands not running, but I haven't been able to figure out how to get them to run. Instead of spinning my wheels on tensorflow locally (which I probably will have computer limiations for anyway). I'm going to set up docker with different specifications for local and aws. I'll make sure the data processing is working locally and then move to aws for any large processing or training.
+
+Docker built successfully and contains the necessary dependencies. Data doesn't seem to be located where it's expected, so tomorrow I'll check out where the data is being stored and ensure the processing file works. 

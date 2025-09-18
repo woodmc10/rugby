@@ -1,9 +1,9 @@
-version: '3.8'
-
 services:
   rugby-dev:
-    build: .
-    container_name: rugby-tackles-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    container_name: rugby-tackles-dev-local
     volumes:
       - .:/app
       - ./data:/app/data
@@ -17,8 +17,10 @@ services:
     command: bash
 
   jupyter:
-    build: .
-    container_name: rugby-tackles-jupyter
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    container_name: rugby-tackles-jupyter-local
     volumes:
       - .:/app
       - ./data:/app/data
