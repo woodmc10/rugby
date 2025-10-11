@@ -201,3 +201,41 @@ Trying to test Docker set up with Claude command `docker-compose run rugby-dev p
 Tensorflow can have a mismatch between the build architecture and the CPU architecture. This is likely the issue with my commands not running, but I haven't been able to figure out how to get them to run. Instead of spinning my wheels on tensorflow locally (which I probably will have computer limiations for anyway). I'm going to set up docker with different specifications for local and aws. I'll make sure the data processing is working locally and then move to aws for any large processing or training.
 
 Docker built successfully and contains the necessary dependencies. Data doesn't seem to be located where it's expected, so tomorrow I'll check out where the data is being stored and ensure the processing file works. 
+
+### 10/2/25
+Data processing is executing fully. It is currently generating 3 different labels - no tackle, white tackle, and dark tackle. Next, I need to read through the CoLab notebooks and see what other processing is needed before training/fine tuning the model. Then, it will be time to get set up with AWS to do basic model training. Once I complete those steps, I need to make sure I've developed the appropriate structure/systems to log model and data experiments. 
+
+**Claude Instructions on Docker Daily Interaction**:
+
+```bash
+# Starting The Day:
+cd aws/rugby-tackles-project
+
+# Run the data_processing.py file
+docker-compose -f docker-compose.local.yml run --rm rugby-dev python src/data_processing.py
+
+# Or start Jupyter Lab
+# docker-compose up jupyter
+# Then visit http://localhost:8888
+
+
+# Running Existing Code:
+# Test your dataset creation code
+# docker-compose run --rm rugby-dev python src/dataset_cluad.py
+
+# Run any script
+# docker-compose run --rm rugby-dev python scripts/train.py --config configs/base_config.yaml
+
+
+# Stopping Containers:
+# Stop Jupyter
+docker-compose -f docker-compose.local.yml down
+
+# Clean up stopped containers
+# docker system prune
+```
+
+These will need to be updated for the new approach - having different docker files for local development and AWS development due to tensorflow configuration issues. Commented code has not been checked/updated
+
+### 10/11/25
+The data_processing.py file is working locally to generate the clips and the dataframe for training and validation annotations. Next steps are to get set up with AWS and get a MoViNet model fine tuned. 

@@ -178,12 +178,22 @@ def process_video_data(video_path, annotations_path, output_dir, clip_length=40)
     return clips_df
 
 
+def condense_tackles_annotations(df):
+    """Condense white_tackle and dark_tackle labels into a single "tackle" category."""
+    df['action'] = df['action'].replace({
+        'white_tackle': 'tackle',
+        'dark_tackle': 'tackle'
+        })
+    return df
+
+
 if __name__ == "__main__":
 
     clip_len = 40
     # Extract clips from all matches
     anno_list = os.listdir('data/raw/rugby_7s/dataset_2025_01_23/ann/')
     anno_dfs = []
+    full_anno_dir = 'data/raw/rugby_7s/dataset_2025_01_23/dataset/'
     for anno in anno_list:
         anno_name = anno.split('.')[0]
         video_path = f'data/raw/rugby_7s/dataset_2025_01_23/video/{anno_name}.mp4'
@@ -206,47 +216,18 @@ if __name__ == "__main__":
     full_df = pd.concat(anno_dfs)
 
     # Save metadata
-    full_df.to_csv(os.path.join(output_dir, 'all_clips_metadata.csv'), index=False)
+    full_df.to_csv(os.path.join(full_anno_dir, 'all_clips_metadata.csv'), index=False)
 
     # Analyze dataset
     analysis = analyze_dataset(full_df)
 
     # Create train/val split
     train_df, val_df = create_train_val_split(full_df)
-    train_df.to_csv(os.path.join(output_dir, 'train_clips.csv'), index=False)
-    val_df.to_csv(os.path.join(output_dir, 'val_clips.csv'), index=False)
+    train_df = condense_tackles_annotations(train_df)
+    val_df = condense_tackles_annotations(val_df)
+    train_df.to_csv(os.path.join(full_anno_dir, 'train_clips.csv'), index=False)
+    val_df.to_csv(os.path.join(full_anno_dir, 'val_clips.csv'), index=False)
 
     print(f"Train set: {len(train_df)} clips")
     print(f"Validation set: {len(val_df)} clips")
-    # training_df = pd.concat(anno_dfs)
-    # validation_df = process_video_data(
-    #     '/content/data/rugby_7s/dataset_2025_01_23/video/usd_loyola.mp4',
-    #     '/content/data/rugby_7s/dataset_2025_01_23/ann/usd_loyola.json',
-    #     '/content/data/rugby_7s/dataset_2025_01_23/dataset/usd_loyola/',
-    #     clip_length=clip_len)
-
-    # # Test with your existing data
-    # video_path = 'data/raw/rugby_7s/dataset_2025_01_23/video/usd_loyola.mp4'
-    # annotations_path = 'data/raw/rugby_7s/dataset_2025_01_23/ann/usd_loyola.json'
-    # output_dir = 'data/raw/rugby_7s/dataset_2025_01_23/processed/usd_loyola/'
-
-    # if os.path.exists(video_path) and os.path.exists(annotations_path):
-    #     clips_df, analysis = process_video_data(
-    #         video_path, annotations_path, output_dir, clip_length=40
-    #     )
-
-    #     # Save metadata
-    #     clips_df.to_csv(os.path.join(output_dir, 'clips_metadata.csv'), index=False)
-
-    #     # Create train/val split
-    #     train_df, val_df = create_train_val_split(clips_df)
-    #     train_df.to_csv(os.path.join(output_dir, 'train_clips.csv'), index=False)
-    #     val_df.to_csv(os.path.join(output_dir, 'val_clips.csv'), index=False)
-
-    #     print(f"Train set: {len(train_df)} clips")
-    #     print(f"Validation set: {len(val_df)} clips")
-
-    # else:
-    #     print("Test data not found. Please update paths in the script.")
-    #     print(f"Looking for video: {video_path}")
-    #     print(f"Looking for annotations: {annotations_path}")
+    
